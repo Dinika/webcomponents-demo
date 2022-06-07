@@ -2,20 +2,22 @@ import { TemplateRenderer } from './template-renderer.js';
 
 class WorkThumbnail extends TemplateRenderer {
     constructor() {
-        super();
+        console.log('WorkThumbnail constructor');
 
-        this.name = 'HelpAlarm';
-        this.role = 'Developer';
+        super();
     }
 
     static get observedAttributes() {
-        return ['name', 'role'];
+        return ['project'];
     }
 
-    attributeChangedCallback(attrName) {
-        if (attrName === 'name' || attrName === 'role') {
-            this.render();
+    attributeChangedCallback(attrName, newValue) {
+        console.log('WorkThumbnail attribute change callback', attrName);
+        if (attrName === 'project') {
+            this.project = JSON.parse(decodeURIComponent(newValue));
+            this.removeAttribute('project');
         }
+        this.render();
     }
 
     get template() {
@@ -55,28 +57,14 @@ class WorkThumbnail extends TemplateRenderer {
                 
             
             </style>
-            <h3>${this.name}</h3>
-            <p>${this.role}</p>
+            ${this.project
+                ? `
+                    <h3>${this.project.name}</h3>
+                    <p>${this.project.role}</p>`
+                : ''
+            }
         `
     }
-
-    set name(val) {
-        !!val ? this.setAttribute('name', val) : this.removeAttribute('name', val);
-    }
-
-    get name() {
-        return this.getAttribute('name');
-    }
-
-
-    set role(val) {
-        !!val ? this.setAttribute('role', val) : this.removeAttribute('role', val);
-    }
-
-    get role() {
-        return this.getAttribute('role');
-    }
-
 
 }
 

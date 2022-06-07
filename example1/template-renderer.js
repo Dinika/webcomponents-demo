@@ -1,5 +1,6 @@
 export class TemplateRenderer extends HTMLElement {
     connectedCallback() {
+        console.log('Template Renderer connected callback', this.noShadow)
         if (!this.noShadow) {
             this.attachShadow({ mode: 'open' });
         }
