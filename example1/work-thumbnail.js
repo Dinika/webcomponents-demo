@@ -14,6 +14,13 @@ class WorkThumbnail extends TemplateRenderer {
         this.render();
     }
 
+    connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('click', () => {
+            this.dispatchEvent(new CustomEvent('openDialog', { bubbles: true, composed: true }))
+        })
+    }
+
     get template() {
         return `
             <style>
@@ -28,6 +35,7 @@ class WorkThumbnail extends TemplateRenderer {
                     padding-left: 24px;
                     box-sizing: border-box;
                     margin: 60px 68px;
+                    cursor: pointer;
                 }
 
                 .parent::before {

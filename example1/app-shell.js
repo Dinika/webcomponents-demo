@@ -1,6 +1,7 @@
 import { TemplateRenderer } from './template-renderer.js';
 import './work-thumbnail.js';
 import './work-section.js';
+import './work-dialog.js';
 
 const projects = [
     {
@@ -47,6 +48,11 @@ class AppShell extends TemplateRenderer {
         this.noShadow = true;
     }
 
+    connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('openDialog', () => this.querySelector('work-dialog').open());
+    }
+
     allWorkThumbnails = projects
         .map(p => `
             <work-thumbnail project="${encodeURIComponent(JSON.stringify(p))}"></work-thumbnail>
@@ -55,6 +61,7 @@ class AppShell extends TemplateRenderer {
 
     get template() {
         return `
+            <work-dialog></work-dialog>
             <work-section>
                 ${this.allWorkThumbnails}
             </work-section>
