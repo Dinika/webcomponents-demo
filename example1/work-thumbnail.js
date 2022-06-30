@@ -1,18 +1,12 @@
 import { TemplateRenderer } from './template-renderer.js';
 
 class WorkThumbnail extends TemplateRenderer {
-    constructor() {
-        console.log('WorkThumbnail constructor');
-
-        super();
-    }
 
     static get observedAttributes() {
         return ['project'];
     }
 
     attributeChangedCallback(attrName, newValue) {
-        console.log('WorkThumbnail attribute change callback', attrName);
         if (attrName === 'project') {
             this.project = JSON.parse(decodeURIComponent(newValue));
             this.removeAttribute('project');
@@ -23,9 +17,8 @@ class WorkThumbnail extends TemplateRenderer {
     get template() {
         return `
             <style>
-                :host {
-                    background: var(--primary-300);
-                    border-radius: 12px;
+                .parent {
+                    position: relative;
                     text-align: left;
                     display: flex;
                     flex-direction: column;
@@ -34,6 +27,23 @@ class WorkThumbnail extends TemplateRenderer {
                     justify-content: center;
                     padding-left: 24px;
                     box-sizing: border-box;
+                    margin: 60px 68px;
+                }
+
+                .parent::before {
+                    content: "";
+                    background: var(--primary-300);
+                    position: absolute;
+                    width: 194px;
+                    height: 194px;
+                    z-index: -1;
+                    left: 0px;
+                    border-radius: 12px;
+                    transition: transform 0.2s ease-in-out;
+                }
+
+                .parent:hover::before {
+                    transform: scale(1.5);
                 }
 
                 h3, p {
@@ -59,8 +69,11 @@ class WorkThumbnail extends TemplateRenderer {
             </style>
             ${this.project
                 ? `
+                <div class="parent">    
                     <h3>${this.project.name}</h3>
-                    <p>${this.project.role}</p>`
+                    <p>${this.project.role}</p>
+                </div>
+                    `
                 : ''
             }
         `

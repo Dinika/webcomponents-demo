@@ -1,5 +1,6 @@
 import { TemplateRenderer } from './template-renderer.js';
 import './work-thumbnail.js';
+import './work-section.js';
 
 const projects = [
     {
@@ -31,6 +32,12 @@ const projects = [
         role: 'Developer',
         description: 'Used to test machine before the start of the LHC runs.',
         link: ''
+    },
+    {
+        name: 'ASM',
+        role: 'Platform Engineer',
+        description: 'Used to schedule different operations and runs on the LHC',
+        link: ''
     }
 ];
 
@@ -40,12 +47,18 @@ class AppShell extends TemplateRenderer {
         this.noShadow = true;
     }
 
-    str = projects.map(p => `
-        <work-thumbnail project="${encodeURIComponent(JSON.stringify(p))}"></work-thumbnail>
-    `);
+    allWorkThumbnails = projects
+        .map(p => `
+            <work-thumbnail project="${encodeURIComponent(JSON.stringify(p))}"></work-thumbnail>
+        `)
+        .join('');
 
     get template() {
-        return this.str;
+        return `
+            <work-section>
+                ${this.allWorkThumbnails}
+            </work-section>
+        `;
     }
 
 }
