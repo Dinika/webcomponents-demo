@@ -50,7 +50,7 @@ class AppShell extends TemplateRenderer {
 
     connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('openDialog', () => this.querySelector('work-dialog').open());
+        this.addEventListener('openDialog', (event) => this.querySelector('work-dialog').open(event.detail));
     }
 
     allWorkThumbnails = projects

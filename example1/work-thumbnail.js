@@ -17,7 +17,7 @@ class WorkThumbnail extends TemplateRenderer {
     connectedCallback() {
         super.connectedCallback();
         this.addEventListener('click', () => {
-            this.dispatchEvent(new CustomEvent('openDialog', { bubbles: true, composed: true }))
+            this.dispatchEvent(new CustomEvent('openDialog', { detail: this.project?.description, bubbles: true, composed: true }))
         })
     }
 

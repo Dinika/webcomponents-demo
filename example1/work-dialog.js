@@ -1,8 +1,11 @@
 import { TemplateRenderer } from './template-renderer.js';
 
 class WorkDialog extends TemplateRenderer {
+    detail = '';
 
-    open() {
+    open(detail) {
+        this.detail = detail;
+        this.render();
         this.shadowRoot.querySelector('dialog').showModal();
         this.addEventListener('click', () => this.shadowRoot.querySelector('dialog').close());
     }
@@ -22,7 +25,7 @@ class WorkDialog extends TemplateRenderer {
 
             </style>
             
-            <dialog>Suck this</dialog>
+            <dialog>${this.detail}</dialog>
         `
     }
 
